@@ -1,22 +1,22 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QWidget, QPushButton, QGridLayout, QLabel, QLineEdit, QVBoxLayout, QCheckBox
+from .enter_code_window import EnterCodeFrame
 
-
-class LoginWindow(QWidget):
+class LoginFrame(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Login")
         self.setStyleSheet(open("./styles/style.qss", "r").read())
 
         # Create main layout
-        main_layout = QVBoxLayout()
-        self.setLayout(main_layout)
+        layout = QVBoxLayout(self)
+        self.setLayout(layout)
 
         # Create widget container
         widget_container = QWidget()
         widget_layout = QGridLayout()
         widget_container.setLayout(widget_layout)
-        main_layout.addWidget(widget_container, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(widget_container, alignment=Qt.AlignmentFlag.AlignCenter)
 
         # Title Label
         title = QLabel("Welcome to Our Platform")
@@ -55,9 +55,15 @@ class LoginWindow(QWidget):
         # Perform login authentication here
         username = self.username_input.text()
         password = self.password_input.text()
+
         # Add your authentication logic here
-        if username == "CodersLegacy" and password == "12345678":
+        if username == "admin" and password == "admin":
+            #Redirection to enter_code_window
+            self.hide()
+            self.enter_code_frame = EnterCodeFrame()
+            self.enter_code_frame.showMaximized()
             print("Login successful")
+            
         else:
             print("Invalid username or password")
     
