@@ -1,6 +1,6 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton
-from PyQt6.QtGui import QPixmap
+from PyQt6.QtGui import QPixmap, QIcon
 
 class EnterCodeFrame(QWidget):
     def __init__(self):
@@ -22,9 +22,13 @@ class EnterCodeFrame(QWidget):
         main_layout.addWidget(input_code, alignment = Qt.AlignmentFlag.AlignCenter)
 
         #Validate button
-        ok_button = QPushButton()
-        ok_button.clicked.connect(self.validate_code)
-        main_layout.addWidget(ok_button, alignment = Qt.AlignmentFlag.AlignCenter)
+        loupe = QPixmap("./img/loupe.png")
+        loupe = loupe.scaled(100, 100, Qt.AspectRatioMode.KeepAspectRatio)
+        search_button = QPushButton()
+        search_button.setIcon(QIcon(loupe))
+        search_button.setIconSize(loupe.size())  # Définir la taille de l'icône
+
+        main_layout.addWidget(search_button, alignment=Qt.AlignmentFlag.AlignCenter)
 
 
 
