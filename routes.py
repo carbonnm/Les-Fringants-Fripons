@@ -88,9 +88,6 @@ def profile():
         return render_template('profile.html', current_user = current_user)
     return redirect(url_for("login"))
 
-if __name__ == '__main__':
-    app.run()
-
 @app.route("/studentListing")
 def studentListing():
     students = ["Simon Polet", "Donato Gentile"]
