@@ -2,6 +2,31 @@
 
 {% block content %}
 
+<!-- List items with avatar and action -->
+<style>
+    .bottom-right {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+    }
+    .bouton-rose {
+        background-color: #e91e63; /* Couleur de fond rose */
+        color: white; /* Couleur du texte blanche */
+        border: none; /* Supprimer les bordures */
+        width: 100px;
+        height: 100px;
+        font-size: 16px; /* Taille de la police */
+    }
+
+    .icone-blanc {
+        color: white; /* Couleur de l'icône blanche */
+        margin-right: 5px; /* Espacement à droite de l'icône */
+    }
+</style>
+
 <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--4-col"></div>
     <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-desktop">
@@ -24,5 +49,11 @@
     <div class="mdl-cell mdl-cell--4-col"></div>
 </div>
 
+<div class="bottom-right">
+    <!-- Bouton en bas à droite -->
+    <a class="bouton-rose mdl-button--fab mdl-js-ripple-effect" href="enter_code.html">
+        <i class="icone-blanc fas fa-icone material-icons">add</i>
+    </a>
+</div>
 
 {% endblock %}

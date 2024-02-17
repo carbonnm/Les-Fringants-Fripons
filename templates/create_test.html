@@ -2,11 +2,43 @@
 
 {% block content %}
 
-<div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--4-col"></div>
+<style>
+
+    .save-button-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .save-button {
+        width: 80%; /* Adjust the width as needed */
+        max-width: 400px; /* Optional: Set a maximum width */
+        background-color: #e8e8e8;
+        -webkit-text-fill-color: black;
+        margin-top: 10px; /* Add margin between buttons */
+    }
+
+    .bouton-rose {
+        background-color: #e91e63; /* Couleur de fond rose */
+        color: white; /* Couleur du texte blanche */
+        border: none; /* Supprimer les bordures */
+        width: 100px;
+        height: 100px;
+        font-size: 16px; /* Taille de la police */
+    }
+
+    .icone-blanc {
+        color: white; /* Couleur de l'icône blanche */
+        margin-right: 5px; /* Espacement à droite de l'icône */
+    }
+</style>
+
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--4-col"></div>
         <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-desktop">
-            <h2>Création d'une évaluation</h2>
-            <!-- Simple Textfield -->
+                <h2>Création d'une évaluation</h2>
+                <!-- Simple Textfield -->
                 <form action="#">
                     <div class="mdl-textfield mdl-js-textfield custom-textfield">
                         <input class="mdl-textfield__input" type="text" id="sample1">
@@ -14,29 +46,41 @@
                     </div>
                 </form>
 
-                <!-- Save Button Container at the bottom -->
-                <style>
-                    .save-button-container {
-                        display: flex;
-                        justify-content: center;
-                        align-items: flex-end;
-                        padding: 16px;
-                        background-color: #e91e63
+                <!-- Ajouter une nouvelle question -->
+                <button type="button" class="mdl-button show-modal">
+                    <span>Ajouter une nouvelle question</span>
+                </button>
+                <dialog class="mdl-dialog">
+                    <div class="mdl-dialog__content">
+                        <p>Énoncé</p>
+                        <div class="mdl-textfield mdl-js-textfield custom-textfield">
+                            <input class="mdl-textfield__input" type="text" id="sample1">
+                            <label class="mdl-textfield__label" for="sample1" style="font-size: 20px;">Titre de l'évaluation</label>
+                        </div>
+                    </div>
+                    <div class="mdl-dialog__actions mdl-dialog__actions--full-width">
+                        <button type="button" class="mdl-button">Agree</button>
+                        <button type="button" class="mdl-button close">Disagree</button>
+                    </div>
+                </dialog>
+                <script>
+                    var dialog = document.querySelector('dialog');
+                    var showModalButton = document.querySelector('.show-modal');
+                    if (!dialog.showModal) {
+                        dialogPolyfill.registerDialog(dialog);
                     }
-
-                    .save-button {
-                        width: 80%; /* Adjust the width as needed */
-                        max-width: 400px; /* Optional: Set a maximum width */
-                        background-color: #e91e63;
-                    }
-                </style>
-                <div class="save-button-container">
-                    <button class="save-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-                        Créer l'évaluation
-                    </button>
-                </div>
+                    showModalButton.addEventListener('click', function () {
+                        dialog.showModal();
+                    });
+                    dialog.querySelector('.close').addEventListener('click', function () {
+                        dialog.close();
+                    });
+                </script>
+                <!-- Créer l'évaluation -->
+                <button class="save-button mdl-button mdl-js-button mdl-button mdl-js-ripple-effect mdl-button--accent">
+                    Créer l'évaluation
+                </button>
         </div>
     </div>
-</div>
 
 {% endblock %}
