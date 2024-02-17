@@ -1,11 +1,14 @@
-from PyQt6.QtWidgets import QMainWindow, QLabel
+from PyQt6.QtWidgets import QMainWindow, QPushButton
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("Exemple PyQt")
-        self.setGeometry(100, 100, 400, 200)
+        self.setWindowTitle("Main Window")
 
-        self.label = QLabel("Bonjour, PyQt !", self)
-        self.label.setGeometry(50, 50, 300, 100)
+        self.button = QPushButton("Settings", self)
+        self.button.clicked.connect(self.open_settings)
+    
+    def open_settings(self):
+        settings_window = SettingsWindow()
+        settings_window.exec_()
