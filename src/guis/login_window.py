@@ -1,48 +1,68 @@
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QWidget, QPushButton, QGridLayout, QLabel, QLineEdit
+from PyQt6.QtWidgets import QWidget, QPushButton, QGridLayout, QLabel, QLineEdit, QVBoxLayout, QCheckBox
 
 
 class LoginWindow(QWidget):
     def __init__(self):
         super().__init__()
-        layout = QGridLayout()
-        layout.setContentsMargins(20, 20, 20, 20)
-        layout.setSpacing(10)
-        self.setWindowTitle("CodersLegacy")
-        self.setLayout(layout)
+        self.setWindowTitle("Login")
+        self.setStyleSheet(open("./styles/style.qss", "r").read())
 
-        self.setStyleSheet(open("./guis/style.qss", "r").read())
+        # Create main layout
+        main_layout = QVBoxLayout()
+        self.setLayout(main_layout)
+
+        # Create widget container
+        widget_container = QWidget()
+        widget_layout = QGridLayout()
+        widget_container.setLayout(widget_layout)
+        main_layout.addWidget(widget_container, alignment=Qt.AlignmentFlag.AlignCenter)
 
         # Title Label
-        title = QLabel("Login Form with PyQt6")
+        title = QLabel("Welcome to Our Platform")
         title.setProperty("class", "heading")
-        layout.addWidget(title, 0, 0, 1, 3, Qt.AlignmentFlag.AlignCenter)
+        widget_layout.addWidget(title, 0, 0, 1, 2, Qt.AlignmentFlag.AlignCenter)
 
         # Username Label and Input
-        user = QLabel("Username:")
-        user.setProperty("class", "normal")
-        layout.addWidget(user, 1, 0)
-        self.input1 = QLineEdit()
-        layout.addWidget(self.input1, 1, 1, 1, 2)
+        user_label = QLabel("Username:")
+        user_label.setProperty("class", "normal")
+        widget_layout.addWidget(user_label, 1, 0)
+        self.username_input = QLineEdit()
+        widget_layout.addWidget(self.username_input, 1, 1)
 
         # Password Label and Input
-        pwd = QLabel("Password")
-        pwd.setProperty("class", "normal")
-        layout.addWidget(pwd, 2, 0)
-        self.input2 = QLineEdit()
-        self.input2.setEchoMode(QLineEdit.EchoMode.Password)
-        layout.addWidget(self.input2, 2, 1, 1, 2)
+        pwd_label = QLabel("Password:")
+        pwd_label.setProperty("class", "normal")
+        widget_layout.addWidget(pwd_label, 2, 0)
+        self.password_input = QLineEdit()
+        self.password_input.setEchoMode(QLineEdit.EchoMode.Password)
+        widget_layout.addWidget(self.password_input, 2, 1)
 
-        # Register and Login Buttons
-        button1 = QPushButton("Register")
-        layout.addWidget(button1, 4, 1)
+        #Checkbox to hide/show the password
+        self.show_pwd_checkbox = QCheckBox("Show Password")
+        self.show_pwd_checkbox.stateChanged.connect(self.toggle_pwd_visibility)
+        widget_layout.addWidget(self.show_pwd_checkbox, 3, 1, 1, 2)
 
-        button2 = QPushButton("Login")
-        button2.clicked.connect(self.login)
-        layout.addWidget(button2, 4, 2)
+
+        # Login Button
+        login_button = QPushButton("Login")
+        login_button.setProperty("class", "action")
+        login_button.clicked.connect(self.login)
+        widget_layout.addWidget(login_button, 4, 0, 1, 2, Qt.AlignmentFlag.AlignCenter)
+
 
     def login(self):
-        if self.input1.text() == "CodersLegacy" and self.input2.text() == "12345678":
-            print("Username and password are correct")
+        # Perform login authentication here
+        username = self.username_input.text()
+        password = self.password_input.text()
+        # Add your authentication logic here
+        if username == "CodersLegacy" and password == "12345678":
+            print("Login successful")
         else:
-            print("Invalid")
+            print("Invalid username or password")
+    
+    def toggle_pwd_visibility(self) -> None:
+        if self.show_pwd_checkbox.checkState() == Qt.CheckState.Checked:
+            self.password_input.setEchoMode(QLineEdit.EchoMode.Normal)
+        else:
+            self.password_input.setEchoMode(QLineEdit.EchoMode.Password)
