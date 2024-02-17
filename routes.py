@@ -64,7 +64,6 @@ def login():
     form = LoginForm()
     #Verification of the form
     if form.validate_on_submit():
-        #Let's "init" the user
         can_connect, user = user_can_connect(form.email.data, form.password.data)
         #Verification of the user password.
         if user is not None and can_connect:
