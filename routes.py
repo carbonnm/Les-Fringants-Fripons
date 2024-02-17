@@ -1,11 +1,16 @@
 from __init__ import app, db
-from flask import flash, redirect, render_template, url_for
+from flask import flash, redirect, render_template, url_for, request, send_from_directory
 from flask_login import current_user, login_user, logout_user
+import os
+from werkzeug.utils import secure_filename
 
 import models.queries.user_queries as user_queries
 
 from models.forms.login_form import LoginForm
 from models.user import User
+
+UPLOAD_FOLDER = 'uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 if user_queries.get_user_by_email("admin@admin.com") is None:
     user_queries.create_user("admin", "admin", "admin@admin.com", "admin", "admin")
@@ -119,3 +124,33 @@ def correctEvaluation():
 @app.route("/correctQuestion")
 def correctQuestion():
     return render_template("correct_question.html")
+
+@app.route("/upload", methods = ['POST'])
+def upload():
+    if 'audio' not in request.files:
+        return 'Aucun fichier audio trouvé', 400
+
+    audio_file = request.files['audio']
+
+    if audio_file.filename == '':
+        return 'Aucun fichier audio sélectionné', 400
+
+    if audio_file:
+        # Assurez-vous que le nom de fichier est sécurisé
+        filename = secure_filename(audio_file.filename)
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+
+        # Enregistrez le fichier audio sur le serveur
+        audio_file.save(filepath)
+
+        return 'Fichier audio enregistré avec succès', 200
+    
+
+@app.route('/uploads/<filename>')
+def download_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachment=True)
+
+
+@app.route("/record")
+def record():
+    return render_template('record.html')

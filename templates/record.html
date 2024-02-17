@@ -1,0 +1,77 @@
+{% extends 'header.html' %}
+
+{% block content %}
+
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--4-col"></div>
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-desktop">
+            <h2>Enregistrement de l'énoncé</h2>
+            <script src="https://cdn.webrtc-experiment.com/RecordRTC.js"></script>
+
+            <button id="startRecording">Démarrer l'enregistrement</button>
+            <button id="stopRecording" disabled>Arrêter l'enregistrement</button>
+            <audio id="audioPlayer" controls></audio>
+            <button id="downloadAudio" disabled>Ajouter l'audio à l'énoncé</button>
+
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const startRecordingButton = document.getElementById('startRecording');
+                    const stopRecordingButton = document.getElementById('stopRecording');
+                    const audioPlayer = document.getElementById('audioPlayer');
+                    const downloadAudioButton = document.getElementById('downloadAudio');
+                    let mediaRecorder;
+                    let audioChunks = [];
+        
+                    startRecordingButton.addEventListener('click', startRecording);
+                    stopRecordingButton.addEventListener('click', stopRecording);
+        
+                    async function startRecording() {
+                        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                        mediaRecorder = new MediaRecorder(stream);
+        
+                        mediaRecorder.ondataavailable = function (event) {
+                            if (event.data.size > 0) {
+                                audioChunks.push(event.data);
+                            }
+                        };
+        
+                        mediaRecorder.onstop = function () {
+                            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                            const audioUrl = URL.createObjectURL(audioBlob);
+                            audioPlayer.src = audioUrl;
+                            audioPlayer.controls = true;
+                            audioPlayer.play();
+                        };
+        
+                        startRecordingButton.disabled = true;
+                        stopRecordingButton.disabled = false;
+        
+                        mediaRecorder.start();
+                    }
+        
+                    function stopRecording() {
+                        mediaRecorder.stop();
+                        startRecordingButton.disabled = false;
+                        stopRecordingButton.disabled = true;
+                        downloadAudioButton.disabled = false;
+
+                        // Envoie les données audio au serveur Flask
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                        const formData = new FormData();
+                        formData.append('audio', audioBlob, 'enregistrement_audio.wav');
+
+                        fetch('/upload', {
+                            method: 'POST',
+                            body: formData,
+                        })
+                        .then(response => response.text())
+                        .then(message => console.log(message))
+                        .catch(error => console.error(error));
+                    }               
+                });
+            </script>
+    </div>
+</div>
+
+{% endblock %}
