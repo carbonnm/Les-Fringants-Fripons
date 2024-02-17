@@ -2,7 +2,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from hint import Hint
 from question_queries import get_question_by_id
-from app import db
+from __init__ import db
 
 
 def create_hint(hint: str, question_id: int):

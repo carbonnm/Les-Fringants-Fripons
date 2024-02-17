@@ -11,21 +11,15 @@
                 <div class="mdl-list__item">
                     <span class="mdl-list__item-primary-content">
                         <i class="material-icons mdl-list__item-avatar">person</i>
-                        <span>{{ student }}</span>
+                        <span>{{ student.firstname }} {{ student.name }}</span>
                     </span>
+                    {% for tag in student.tag %}
                     <span class="mdl-list__item-secondary-content">
-                        <!-- Basic Chip ou Deletable Chip en fonction de l'action -->
-                        {% if deletable %}
-                            <span class="mdl-chip mdl-chip--deletable">
-                                <span class="mdl-chip__text">Utilise indices</span>
-                                <button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
-                            </span>
-                        {% else %}
-                            <span class="mdl-chip">
-                                <span class="mdl-chip__text">Utilise indices</span>
-                            </span>
-                        {% endif %}
+                        <span class="mdl-chip">
+                            <span class="mdl-chip__text">{{ tag.name }}</span>
+                        </span>
                     </span>
+                    {% endfor %}
                 </div>
             {% endfor %}
         </div>

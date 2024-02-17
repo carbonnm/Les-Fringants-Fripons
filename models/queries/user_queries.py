@@ -59,6 +59,15 @@ def get_all_users() -> list[User]:
 	return User.query.all()
 
 
+def get_all_students() -> list[User]:
+	"""
+	Gets all the students from the database.
+
+	:return: A list of students.
+	"""
+	return User.query.filter_by(role="student").all()
+
+
 def delete_user_by_id(user_id: int):
 	"""
 	Deletes a user from the database by its id.
@@ -72,6 +81,17 @@ def delete_user_by_id(user_id: int):
 	except SQLAlchemyError:
 		db.session.rollback()
 		raise
+
+
+def get_user_tags_by_id(user_id: int) -> list[str]:
+	"""
+	Gets all the tags of a user from the database by its id.
+
+	:param user_id: The id of the user.
+	:return: A list of tags.
+	"""
+	user = get_user_by_id(user_id)
+	return user.tag
 
 
 def user_can_connect(user_email: str, password: str) -> (bool, User):

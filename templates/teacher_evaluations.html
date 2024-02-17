@@ -37,6 +37,17 @@
         margin-right: 5px; /* Espacement à droite de l'icône */
     }
 </style>
+
+<script>
+    function copyToClipboard(text)
+    {
+        navigator.clipboard.writeText(text).then(function() {
+            alert("You got the test code: " + text);
+        }, function(err) {
+            alert("Could not copy test code: " + err + ".");
+        });
+    }
+</script>
   
 
 <div class="mdl-grid">
@@ -46,9 +57,9 @@
                 {% for evaluation in evaluations %}
                     <div class="mdl-list__item mdl-shadow--2dp">
                         <span class="mdl-list__item-primary-content">
-                        <span>{{ evaluation }}</span>
+                        <span>{{ evaluation.name }}</span>
                         </span>
-                        <a class="mdl-list__item" href="enter_code.html">
+                        <a class="mdl-list__item" href="#" onclick="copyToClipboard('{{ evaluation.code }}')">
                             <i class="material-icons">content_copy</i>
                         </a>
                         <span style="margin-right: 10px;"></span>

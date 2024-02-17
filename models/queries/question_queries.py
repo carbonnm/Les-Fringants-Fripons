@@ -1,9 +1,9 @@
 from sqlalchemy.exc import SQLAlchemyError
 
-from hint import Hint
-from question import Question
+from ..hint import Hint
+from ..question import Question
 
-from app import db
+from __init__ import db
 
 
 def create_question(question: str, vocal: bytes, test_id: str, hints: [str]):
@@ -34,7 +34,7 @@ def get_question_by_id(question_id: int) -> Question:
     :param question_id: The id of the lesson.
     :return: The user.
     """
-    return Question.query.filter(id = question_id).first()
+    return Question.query.filter_by(id = question_id).first()
 
 
 def get_all_questions() -> list[Question]:
