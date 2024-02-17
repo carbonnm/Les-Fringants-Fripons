@@ -102,3 +102,8 @@ def studentListing():
     students = ["Simon Polet", "Donato Gentile"]
     deletable = True
     return render_template('students_listing.html', students=students, deletable=deletable)
+
+@app.route("/teacherEvaluations")
+def teacherEvaluations():
+    evaluations = ["Math", "Physics", "Psycho"]
+    return render_template('teacher_evaluations.html', evaluations=evaluations)
