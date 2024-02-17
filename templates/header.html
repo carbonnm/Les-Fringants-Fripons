@@ -5,6 +5,7 @@
     <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.pink-yellow.min.css" />
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
 </head>
 
 <!-- Always shows a header, even in smaller screens. -->
@@ -17,23 +18,22 @@
             <div class="mdl-layout-spacer"></div>
             <!-- Navigation. We hide it in small screens. -->
             <nav class="mdl-navigation mdl-layout--large-screen-only">
-                <a class="mdl-navigation__link" href="/">Créations</a>
-                <a class="mdl-navigation__link" href="/">Articles</a>
-                <a class="mdl-navigation__link" href="/">Événements</a>
-                <a class="mdl-navigation__link" href="/">Customisateur</a>
+                <a class="mdl-navigation__link" href="/">
+                    <i class="material-icons">home</i>
+                </a>
                 {% if current_user.is_authenticated %}
-                    {% if current_user.admin|int %}
+                    {% if current_user.role == "admin" %}
                         <a class="mdl-navigation__link" href="/admin">Gestion</a>
                     {% endif %}
                     <span class="mdl-chip mdl-chip--deletable">
-                        <span class="mdl-chip__text">{{current_user.id}}</span>
+                        <span class="mdl-chip__text">{{current_user.email}}</span>
                         <a href="/profile" class="mdl-chip__action"><i class="material-icons">manage_accounts</i></a>
                         <a href="/logout" class="mdl-chip__action"><i class="material-icons">logout</i></a>
                     </span>
                 {% else %}
                     <span class="mdl-chip">
-                        <span class="mdl-chip__text">Connexion</span>
-                        <a href="/login" class="mdl-chip__action"><i class="material-icons">login</i></a>
+                        <span class="mdl-chip__text">Login</span>
+                        <a class="mdl-chip__action" href="/login"><i class="material-icons">login</i></a>
                     </span>
                 {% endif %}
             </nav>
@@ -42,16 +42,15 @@
     <div class="mdl-layout__drawer">
         <span class="mdl-layout-title">Revaluv</span>
         <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" href="/">Créations</a>
-            <a class="mdl-navigation__link" href="/">Articles</a>
-            <a class="mdl-navigation__link" href="/">Événements</a>
-            <a class="mdl-navigation__link" href="/">Customisateur</a>
+            <a class="mdl-navigation__link" href="/">
+                <i class="material-icons">home</i>
+            </a>
             {% if current_user.is_authenticated %}
-                {% if current_user.admin|int %}
+                {% if current_user.role == "admin" %}
                     <a class="mdl-navigation__link" href="/admin">Gestion</a>
                 {% endif %}
                 <span class="mdl-chip mdl-chip--deletable">
-                    <span class="mdl-chip__text">{{current_user.id}}</span>
+                    <span class="mdl-chip__text">{{current_user.email}}</span>
                     <a href="/profile" class="mdl-chip__action"><i class="material-icons">manage_accounts</i></a>
                     <a href="/logout" class="mdl-chip__action"><i class="material-icons">logout</i></a>
                 </span>

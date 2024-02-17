@@ -1,5 +1,5 @@
-from src import db
-
+from __init__ import db
+from .hint import Hint
 
 class Question(db.Model):
 	"""

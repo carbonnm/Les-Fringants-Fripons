@@ -1,26 +1,18 @@
-from app import app
-import __init__ as init
+from __init__ import app, db
+from flask import flash, redirect, render_template, url_for
+from flask_login import current_user, login_user, logout_user
 
-from flask import render_template
-from flask import redirect
-from flask import url_for
-from flask import request
-from flask import flash
-from flask import jsonify
+import models.queries.user_queries as user_queries
 
-from models.queries.user_queries import user_can_connect
-
-from flask_login import login_required
-from flask_login import current_user
-from flask_login import login_user
-from flask_login import logout_user
-from werkzeug.security import check_password_hash
-
-from models.user import User
 from models.forms.login_form import LoginForm
+from models.user import User
 
-@init.app.login_manager.user_loader
+if user_queries.get_user_by_email("admin@admin.com") is None:
+    user_queries.create_user("admin", "admin", "admin@admin.com", "admin", "admin")
+
+@app.login_manager.user_loader
 def load_user(user):
+    db.create_all()
     return User.query.get(int(user))
 
 @app.errorhandler(404)
@@ -64,7 +56,7 @@ def login():
     form = LoginForm()
     #Verification of the form
     if form.validate_on_submit():
-        can_connect, user = user_can_connect(form.email.data, form.password.data)
+        can_connect, user = user_queries.user_can_connect(form.email.data, form.password.data)
         #Verification of the user password.
         if user is not None and can_connect:
             login_user(user)
@@ -95,7 +87,6 @@ def profile():
     if current_user.is_authenticated :
         return render_template('profile.html', current_user = current_user)
     return redirect(url_for("login"))
-
 
 @app.route("/studentListing")
 def studentListing():

@@ -4,7 +4,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
 app = Flask(__name__, template_folder="./templates", static_folder="./static")
+
 app.config.from_object(Config)
+
 db = SQLAlchemy(app)
 
 login_manager = LoginManager(app) 

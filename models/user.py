@@ -1,4 +1,6 @@
 from flask_login import UserMixin
+from .lesson import Lesson
+from .answer import Answer
 from __init__ import db
 
 
@@ -18,8 +20,8 @@ class User(UserMixin, db.Model) :
 	role = db.Column(db.String(255), nullable = False)
 	email = db.Column(db.String(255), nullable = False, unique = True)
 	password = db.Column(db.String(255), nullable = False)
-	lesson = db.relationship("Lesson", backref="user_lesson", cascade='save-update, merge, delete, delete-orphan', lazy='dynamic')
-	answer = db.relationship("Answer", backref="user_answer", cascade='save-update, merge, delete, delete-orphan', lazy='dynamic')
+	lesson = db.relationship('Lesson', backref="user_lesson", cascade='save-update, merge, delete, delete-orphan', lazy='dynamic')
+	answer = db.relationship('Answer', backref="user_answer", cascade='save-update, merge, delete, delete-orphan', lazy='dynamic')
 	
 	# def getname(self) :
 	# 	"""
