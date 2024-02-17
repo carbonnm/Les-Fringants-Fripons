@@ -96,3 +96,9 @@ def profile():
         return render_template('profile.html', current_user = current_user)
     return redirect(url_for("login"))
 
+
+@app.route("/studentListing")
+def studentListing():
+    students = ["Simon Polet", "Donato Gentile"]
+    deletable = True
+    return render_template('students_listing.html', students=students, deletable=deletable)

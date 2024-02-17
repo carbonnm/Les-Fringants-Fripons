@@ -1,0 +1,25 @@
+{% extends 'header.html' %}
+
+{% block content %}
+
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--6-col">
+        <!-- Contenu de la première moitié de la page -->
+        <div class="mdl-list">
+            <div class="mdl-listitem">Élément 1</div>
+            <div class="mdl-listitem">Élément 2</div>
+            <!-- Ajoutez plus d'éléments de liste ici si nécessaire -->
+        </div>
+    </div>
+    <div class="mdl-cell mdl-cell--6-col">
+        <!-- Contenu de la deuxième moitié de la page -->
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary">Bouton</button>
+    </div>
+</div>
+
+<!-- Colored FAB button with ripple -->
+<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+    <i class="material-icons">add</i>
+</button>
+
+{% endblock %}
