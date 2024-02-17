@@ -1,0 +1,27 @@
+{% extends 'header.html' %}
+
+{% block content %}
+
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--4-col"></div>
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-desktop">
+        <h2>Correction des questions</h2>
+        <div class="demo-list-action mdl-list">
+            {% for question in questions %}
+                <div class="mdl-list__item">
+                    <div class="material-icons mdl-badge mdl-badge--overlap" data-badge="1"><span>account_box</span></div>
+                    <span style="margin-right: 84px;"></span>
+                    <div style="height: 40px;"></div>
+                    <div class="mdl-list__item mdl-shadow--2dp">
+                        <span class="mdl-list__item-primary-content">
+                        <span>{{ question }}</span>
+                        </span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col"></div>
+</div>
+
+{% endblock %}
