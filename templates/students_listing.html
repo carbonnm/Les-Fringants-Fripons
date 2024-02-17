@@ -13,19 +13,10 @@
                         <i class="material-icons mdl-list__item-avatar">person</i>
                         <span>{{ student }}</span>
                     </span>
-                    <span class="mdl-list__item-secondary-content">
-                        <!-- Basic Chip ou Deletable Chip en fonction de l'action -->
-                        {% if deletable %}
-                            <span class="mdl-chip mdl-chip--deletable">
-                                <span class="mdl-chip__text">Utilise indices</span>
-                                <button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
-                            </span>
-                        {% else %}
-                            <span class="mdl-chip">
-                                <span class="mdl-chip__text">Utilise indices</span>
-                            </span>
-                        {% endif %}
-                    </span>
+                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1">
+                        <input type="checkbox" id="checkbox-1" class="mdl-checkbox__input" checked>
+                        <span class="mdl-checkbox__label">Checkbox</span>
+                      </label>
                 </div>
             {% endfor %}
         </div>

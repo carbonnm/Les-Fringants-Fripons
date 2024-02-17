@@ -5,7 +5,36 @@
 <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--4-col"></div>
         <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-desktop">
-            <h2>Liste des Élèves</h2>
+            <h2>Création d'une évaluation</h2>
+            <!-- Simple Textfield -->
+                <form action="#">
+                    <div class="mdl-textfield mdl-js-textfield custom-textfield">
+                        <input class="mdl-textfield__input" type="text" id="sample1">
+                        <label class="mdl-textfield__label" for="sample1" style="font-size: 20px;">Titre de l'évaluation</label>
+                    </div>
+                </form>
+
+                <!-- Save Button Container at the bottom -->
+                <style>
+                    .save-button-container {
+                        display: flex;
+                        justify-content: center;
+                        align-items: flex-end;
+                        padding: 16px;
+                        background-color: #e91e63
+                    }
+
+                    .save-button {
+                        width: 80%; /* Adjust the width as needed */
+                        max-width: 400px; /* Optional: Set a maximum width */
+                        background-color: #e91e63;
+                    }
+                </style>
+                <div class="save-button-container">
+                    <button class="save-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                        Créer l'évaluation
+                    </button>
+                </div>
         </div>
     </div>
 </div>

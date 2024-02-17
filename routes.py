@@ -92,9 +92,25 @@ def profile():
 def studentListing():
     students = ["Simon Polet", "Donato Gentile"]
     deletable = True
-    return render_template('students_listing.html', students=students, deletable=deletable)
+    return render_template('students_listing.html', students=students)
 
 @app.route("/teacherEvaluations")
 def teacherEvaluations():
     evaluations = ["Math", "Physics", "Psycho"]
     return render_template('teacher_evaluations.html', evaluations=evaluations)
+
+
+@app.route("/createTest")
+def createTest():
+    return render_template('create_test.html')
+
+
+@app.route("/modifyTest")
+def modifyTest():
+    return render_template('modify_test.html')
+
+
+@app.route("/correctQuestions")
+def correctQuestions():
+    questions = ["Question 1", "Question 2", "Question3"]
+    return render_template('correct_questions.html', questions = questions)
