@@ -110,7 +110,12 @@ def modifyTest():
     return render_template('modify_test.html')
 
 
-@app.route("/correctQuestions")
-def correctQuestions():
+@app.route("/correctEvaluation")
+def correctEvaluation():
     questions = ["Question 1", "Question 2", "Question3"]
-    return render_template('correct_questions.html', questions = questions)
+    return render_template('correct_evaluation.html', questions = questions)
+
+
+@app.route("/correctQuestion")
+def correctQuestion():
+    return render_template("correct_question.html")
