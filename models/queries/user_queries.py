@@ -16,20 +16,18 @@ def create_user(firstname: str, name: str, email: str, password: str, role: str 
 	:param password: The password of the user.
 	:param role: The role of the user.
 	"""
-	with db.session as session:
-		if get_user_by_email(email) is not None:
-			raise ValueError("A user with the same email already exists.")
+	if get_user_by_email(email) is not None:
+		raise ValueError("A user with the same email already exists.")
 
-		salt = bcrypt.gensalt()
-		password = bcrypt.hashpw(password.encode(), salt)
-		user = User(firstname=firstname, name=name, role=role, email=email, password=password)
-		session.begin()
-		try:
-			session.add(user)
-			session.commit()
-		except SQLAlchemyError:
-			session.rollback()
-			raise
+	salt = bcrypt.gensalt()
+	password = bcrypt.hashpw(password.encode(), salt)
+	user = User(firstname=firstname, name=name, role=role, email=email, password=password)
+	try:
+		db.session.add(user)
+		db.session.commit()
+	except SQLAlchemyError:
+		db.session.rollback()
+		raise
 
 
 def get_user_by_id(user_id: int) -> User:
@@ -39,8 +37,7 @@ def get_user_by_id(user_id: int) -> User:
 	:param user_id: The id of the user.
 	:return: The user.
 	"""
-	with db.session as session:
-		return session.query(User).filter(User.id == user_id).first()
+	return User.query.get(user_id)
 	
 	
 def get_user_by_email(user_email: str) -> User:	
@@ -50,8 +47,7 @@ def get_user_by_email(user_email: str) -> User:
 	:param user_email: The email of the user.
 	:return: The user.
 	"""
-	with db.session as session:
-		return session.query(User).filter(User.email == user_email).first()	
+	return User.query.filter_by(email=user_email).first()
 
 
 def get_all_users() -> list[User]:
@@ -60,8 +56,7 @@ def get_all_users() -> list[User]:
 
 	:return: A list of users.
 	"""
-	with db.session as session:
-		return session.query(User).all()
+	return User.query.all()
 
 
 def delete_user_by_id(user_id: int):
@@ -71,14 +66,12 @@ def delete_user_by_id(user_id: int):
 	:param user_id: The id of the user.
 	"""
 	user = get_user_by_id(user_id)
-	with db.session as session:
-		session.begin()
-		try:
-			session.delete(user)
-			session.commit()
-		except SQLAlchemyError:
-			session.rollback()
-			raise
+	try:
+		db.session.delete(user)
+		db.session.commit()
+	except SQLAlchemyError:
+		db.session.rollback()
+		raise
 
 
 def user_can_connect(user_email: str, password: str) -> (bool, User):

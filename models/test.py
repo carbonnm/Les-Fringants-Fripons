@@ -1,4 +1,5 @@
-from src import db
+from __init__ import db
+from .question import Question
 
 
 class Test(db.Model):

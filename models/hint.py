@@ -1,4 +1,4 @@
-from src import db
+from __init__ import db
 
 
 class Hint(db.Model):

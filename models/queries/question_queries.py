@@ -1,8 +1,7 @@
 from sqlalchemy.exc import SQLAlchemyError
 
-from .. import database_handler
-from ..models.hint import Hint
-from ..models.question import Question
+from hint import Hint
+from question import Question
 
 from app import db
 
@@ -16,18 +15,16 @@ def create_question(question: str, vocal: bytes, test_id: str, hints: [str]):
     :param test_id: The id of the test.
     :param hints: The hints of the question.
     """
-    with db.session as session:
-        question = Question(question=question, vocal=vocal, test=test_id)
-        hints = [Hint(hint=hint, question=question.id) for hint in hints]
-        session.begin()
-        try:
-            session.add(question)
-            for hint_entity in hints:
-                session.add(hint_entity)
-            session.commit()
-        except SQLAlchemyError:
-            session.rollback()
-            raise
+    question = Question(question=question, vocal=vocal, test=test_id)
+    hints = [Hint(hint=hint, question=question.id) for hint in hints]
+    try:
+        db.session.add(question)
+        for hint_entity in hints:
+            db.session.add(hint_entity)
+        db.session.commit()
+    except SQLAlchemyError:
+        db.session.rollback()
+        raise
 
 
 def get_question_by_id(question_id: int) -> Question:
@@ -37,8 +34,7 @@ def get_question_by_id(question_id: int) -> Question:
     :param question_id: The id of the lesson.
     :return: The user.
     """
-    with db.session as session:
-        return session.query(Question).filter(Question.id == question_id).first()
+    return Question.query.filter(id = question_id).first()
 
 
 def get_all_questions() -> list[Question]:
@@ -47,8 +43,7 @@ def get_all_questions() -> list[Question]:
 
     :return: A list of lessons.
     """
-    with db.session as session:
-        return session.query(Question).all()
+    return Question.query.all()
 
 
 def delete_question_by_id(question_id: int):
@@ -58,11 +53,9 @@ def delete_question_by_id(question_id: int):
     :param question_id: The id of the question.
     """
     lesson = get_question_by_id(question_id)
-    with db.session as session:
-        session.begin()
-        try:
-            session.delete(lesson)
-            session.commit()
-        except SQLAlchemyError:
-            session.rollback()
-            raise
+    try:
+        db.session.delete(lesson)
+        db.session.commit()
+    except SQLAlchemyError:
+        db.session.rollback()
+        raise

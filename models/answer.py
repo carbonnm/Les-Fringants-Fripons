@@ -1,5 +1,5 @@
 from sqlalchemy import String, Integer, ForeignKey
-from src import db
+from  __init__ import db
 
 
 class Answer(db.Model):
