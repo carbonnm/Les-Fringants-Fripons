@@ -41,7 +41,7 @@ def get_user_by_id(user_id: int) -> User:
 	:return: The user.
 	"""
 	with DATABASE_HANDLER.get_session() as session:
-		return session.query(User).filter(User.id == id).first()
+		return session.query(User).filter(User.id == user_id).first()
 	
 	
 def get_user_by_email(user_email: str) -> User:	
