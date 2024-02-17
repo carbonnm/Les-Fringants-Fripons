@@ -1,0 +1,45 @@
+<!--Inheritance-->
+{% extends 'mdl.html' %}
+
+{% block content %}
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--4-col"></div>
+        <div class="mdl-cell mdl-cell--4-col">
+            <h2>Page de LogIn</h2>
+            <form method="POST" action="/login" novalidate>
+                <!--Use of a csrf token-->
+                {{ form.csrf_token }}
+
+                <!--Username-->
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    {{ form.username(placeholder=form.username.label.text, class="mdl-textfield__input") }}
+                    <label class="mdl-textfield__label" for="username">Nom d'utilisateur</label>
+                </div>
+                {% if form.username.errors %} 
+                    {% for error in form.username.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                {% endif %}
+
+                <!--Password-->
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    {{ form.password(placeholder=form.password.label.text, class="mdl-textfield__input") }}
+                    <label class="mdl-textfield__label" for="password">Mot de passe</label>
+                </div>
+                {% if form.password.errors %} 
+                    {% for error in form.password.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                {% endif %}
+
+                <!--Submittion-->
+                <div class="mdl-cell mdl-cell--12-col">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                        Connexion
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="mdl-cell mdl-cell--4-col"></div>
+    </div>
+{% endblock %}

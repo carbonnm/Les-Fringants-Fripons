@@ -1,0 +1,13 @@
+{% extends 'index.html' %}
+{% block title %}Not found{% endblock %}
+{% block body %}
+    <div class="row min-vh-100 align-items-center">
+        <div class="col-12">
+            <h1>Error 404 - Not found</h1>
+            <p>
+                Oops, what you're looking for is not here...
+                Please, go back to the <a href="{{ url_for('index') }}">home page</a>.
+            </p>
+        </div>
+    </div>
+{% endblock %}

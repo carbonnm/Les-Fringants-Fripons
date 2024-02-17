@@ -1,3 +1,7 @@
 sqlalchemy
 bcrypt
 flask
+WTForms
+Flask-Login
+Flask-WTF
+Werkzeug
