@@ -46,12 +46,14 @@
     }
 
     .icon-container {
-        float: right;
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
     }
 
     .inputPane {
     width: 100%; /* Prend tout l'espace disponible horizontalement */
-    height: 80vh; /* Ajuste la hauteur à 80% de la hauteur de la fenêtre */
+    height: 60vh; /* Ajuste la hauteur à 80% de la hauteur de la fenêtre */
     resize: none; /* Empêche le redimensionnement du textarea par l'utilisateur */
 }
 
@@ -96,30 +98,42 @@
 
                     <div class="icon-container">
                         <!-- FAB button with ripple -->
-                        <a class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" href = {{ url_for('record') }}>
+                        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
                             <i class="material-icons">microphone</i>
-                        </a>
+                        </button>
+                        <button id="startRecording" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
+                            <i class="material-icons">play</i>
+                        </button>
+                        <button id="startRecording" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
+                            <i class="material-icons">stop</i>
+                        </button>
+                        <audio id="audioPlayer" controls></audio>
+                        <button id="downloadAudio" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
+                            <i class="material-icons">add</i>
+                        </button>
+                    </div>
 
-                        <h4 class="mdl-dialog__title">Réponse finale de l'exercice</h4>
-                        <div class="mdl-dialog__content">
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" id="sample2">
-                                <label class="mdl-textfield__label" for="sample2">Réponse finale de l'exercice</label>
-                            </div>
-                        </div>
+                    <div class="custom-dialog">
+                        <h4 class="mdl-dialog__title">Indices</h4>
+                    </div>
 
-                        <div>
+                    <div class="mdl-dialog__content">
                         <!-- Zone de saisie pour les hints -->
                         <textarea id="markdown" class="inputPane"></textarea>
-                        </div>
-                    
+                    </div>
+
+                    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+                    <script>
+                        document.getElementById('content').innerHTML =
+                          marked.parse('# Marked in the browser\n\nRendered by **marked**.');
+                      </script>
                     
                         <!-- Actions de la boîte de dialogue -->
                         <div class="mdl-dialog__actions">
                             <!-- Bouton pour ajouter l'exercice -->
-                            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Ajouter l'exercice</button>
+                            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored show-modal">Ajouter l'exercice</button>
                             <!-- Bouton pour annuler -->
-                            <button type="button" class="mdl-button mdl-js-button mdl-button--raised">Annuler</button>
+                            <button type="button" class="mdl-button mdl-js-button mdl-button--raised close">Annuler</button>
                         </div>
                     </div>
                     
