@@ -59,7 +59,7 @@ def login():
     """
     if current_user.is_authenticated :
         flash("You are already connected", "warning")
-        return redirect(url_for('homepage'))
+        return redirect('/')
     
     form = LoginForm()
     #Verification of the form
@@ -73,7 +73,7 @@ def login():
         else :
             flash("Incorrect password or username", "warning")
             return redirect(url_for('login'))
-    return render_template('login.html',form = form)
+    return render_template('./forms/login.html',form = form)
 
 
 @app.route("/logout")
