@@ -181,3 +181,8 @@ def download_file(filename):
 @app.route("/record")
 def record():
     return render_template('record.html')
+
+
+@app.route("/passEvaluation")
+def passEvaluation():
+	return render_template('pass_evaluation.html')
