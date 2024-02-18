@@ -37,7 +37,7 @@ if user_queries.get_user_by_email("admin@admin.com") is None:
 
 	create_test(lesson_id=get_lesson_by_name("Probabilités et Statistiques").id, name="Examen Bac 2 janvier 2023", questions_list=[])
 	create_test(lesson_id=get_lesson_by_name("Probabilités et Statistiques").id, name="Examen Bac 2 juin 2024", questions_list=[])
-	create_test(lesson_id=get_lesson_by_name("Introduction à l'informatique").id, name="Examen Bac 1 janvier 2023", questions_list=[])
+	create_test(lesson_id=get_lesson_by_name("Introduction à l'informatique").id, name="Examen Bac 1 janvier 2023", questions_list=[])                                                           
 
 
 @app.login_manager.user_loader

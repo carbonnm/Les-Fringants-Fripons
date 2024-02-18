@@ -52,6 +52,21 @@
 </style>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
+    function initMarkdown() {
+        var questions = document.querySelectorAll("#question-meta");
+        for (var questionMeta of questions) {
+            var text = questionMeta.getAttribute("question");
+            for(question of document.querySelectorAll("#question-text"))
+            {
+                if (question.getAttribute("question_id") == questionId)
+                {
+                    question.innerHTML = marked.parse(text);
+                    break;
+                }
+            }
+        }
+    }
+
     function hintMarkdown(questionId) {
         var hints = document.querySelectorAll("#hint-meta");
         for(var hint of hints)
