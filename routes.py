@@ -206,7 +206,7 @@ def enter_code():
 def join(code):
 	if does_code_exist(code):
 		# Todo: redirect to the test page
-		return render_template('test.html', test=get_test_by_code(code))
+		return render_template('pass_evaluation.html', test=get_test_by_code(code))
 	else:
 		# flash('The code is not correct. Please try again.', 'error')
 		return redirect('/enter_code')
@@ -222,9 +222,3 @@ def add_test():
 	questions_list = [Question(question["question"], "", [question["hint"]]) for question in questions]
 	create_test(lesson_id, title, questions_list)
 	return "Test added", 200
-
-
-@app.route("/passEvaluation")
-def pass_evaluation():
-	questions = ["Question1", "Question2", "Question3"]
-	return render_template('pass_evaluation.html', questions = questions)
