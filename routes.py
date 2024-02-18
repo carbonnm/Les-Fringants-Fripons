@@ -39,8 +39,29 @@ if user_queries.get_user_by_email("admin@admin.com") is None:
 	create_test(lesson_id=get_lesson_by_name("Probabilités et Statistiques").id, name="Examen Bac 2 juin 2024", questions_list=[])
 	create_test(lesson_id=get_lesson_by_name("Introduction à l'informatique").id, name="Examen Bac 1 janvier 2023", questions_list=[])
 	create_test(lesson_id=get_lesson_by_name("Introduction à l'informatique").id, name="Examen mystère", 
-			 questions_list=[Question(text="", vocal=None, hints=[]), 
-					Question(text="", vocal=None, hints=[]),
+			 questions_list=[Question(text="""
+### Problème : Forces et Tensions dans un Système de Poulies
+
+Un bloc de masse m1 = 5 kg est suspendu par une corde qui passe sur une poulie fixe, puis descend verticalement pour être attaché à un second bloc de masse m2 = 3 kg qui repose sur une surface horizontale sans frottement. Un troisième bloc de masse m3 = 4 kg est suspendu par une autre corde attachée au second bloc.
+
+1. Calculez la tension dans la corde reliant le premier bloc au second.
+2. Déterminez la tension dans la corde reliant le second bloc au troisième.
+3. Quelle est l'accélération du système entier ?
+4. Si la masse m2 est retirée, comment cela affectera-t-il l'accélération du système ?
+""", vocal=None, hints=[]), 
+					Question(text="", vocal=None, hints=[problem_description = """
+### Problème : Forces et Tensions dans un Système de Poulies
+
+Un bloc de masse **m1 = 5 kg** est suspendu par une corde qui passe sur une poulie fixe, puis descend verticalement pour être attaché à un second bloc de masse **m2 = 3 kg** qui repose sur une surface horizontale sans frottement. Un troisième bloc de masse **m3 = 4 kg** est suspendu par une autre corde attachée au second bloc.
+
+1. Calculez la **tension** dans la corde reliant le premier bloc au second.
+2. Déterminez la **tension** dans la corde reliant le second bloc au troisième.
+3. Quelle est l'**accélération** du système entier ?
+4. Si la masse **m2** est retirée, comment cela affectera-t-il l'**accélération** du système ?
+
+**Indice :** Pour résoudre ce problème, utilisez les principes de la **conservation de l'énergie** et les lois de **Newton** pour les mouvements rectilignes et circulaires.
+"""
+]),
 					Question(text= "", vocal= None, hints= [])])
 
 
