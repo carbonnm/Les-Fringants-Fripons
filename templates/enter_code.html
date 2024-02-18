@@ -2,26 +2,39 @@
 
 {% block content %}
 
-<div class="mdl-grid">
+<div class="mdl-grid center-content"> <!-- Added center-content class -->
     <div class="mdl-cell mdl-cell--4-col"></div>
-    <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-desktop">
-        <div class="mdl-textfield mdl-js-textfield">
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-desktop mdl-cell--middle"> <!-- Added mdl-cell--middle class -->
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="logo" class="logo" style="width: 60%; height: 60%;">
+    </div>
+    <div class="mdl-cell mdl-cell--4-col"></div>
+</div>
+<div class="mdl-grid center-content"> <!-- Added center-content class -->
+    <div class="mdl-cell mdl-cell--4-col"></div>
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-desktop mdl-cell--middle"> <!-- Added mdl-cell--middle class -->
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--full-width">
             <input class="mdl-textfield__input" type="text" id="query">
             <label class="mdl-textfield__label" for="query">Entrez votre code</label>
         </div>
     </div>
-    <div class="mdl-cell mdl-cell--2-col"></div>
-    <div class="mdl-cell mdl-cell--2-col"></div>
-</div>
-<div class="mdl-grid">
     <div class="mdl-cell mdl-cell--4-col"></div>
-    <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-desktop">
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+</div>
+<div class="mdl-grid center-content"> <!-- Added center-content class -->
+    <div class="mdl-cell mdl-cell--4-col"></div>
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-desktop mdl-cell--middle"> <!-- Added mdl-cell--middle class -->
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="redirectToJoin()">
             Entrer
         </button>
     </div>
-    <div class="mdl-cell mdl-cell--2-col"></div>
-    <div class="mdl-cell mdl-cell--2-col"></div>
+    <div class="mdl-cell mdl-cell--4-col"></div>
 </div>
+
+<script>
+    function redirectToJoin() {
+        var code = document.getElementById("query").value;
+        window.location.href = "/test/" + code;
+    }
+</script>
+
 
 {% endblock %}

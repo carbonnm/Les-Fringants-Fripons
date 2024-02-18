@@ -1,4 +1,5 @@
 import os
+from models.objects.question import Question
 import models.queries.user_queries as user_queries
 import models.queries.tag_queries as tag_queries
 
@@ -9,8 +10,9 @@ from werkzeug.utils import secure_filename
 
 from models.queries.user_queries import get_user_by_email
 from models.queries.lesson_queries import create_lesson, get_lesson_by_name
-from models.queries.test_queries import get_all_tests, create_test
+from models.queries.test_queries import get_all_tests, create_test, does_code_exist, get_test_by_code, get_test_by_id
 from models.forms.login_form import LoginForm
+from flask import redirect, render_template, flash
 
 db.create_all()
 UPLOAD_FOLDER = 'uploads'
@@ -62,7 +64,9 @@ def server_error(e):
 @app.route('/')
 @login_required
 def index():
-	return render_template('index.html')
+	if current_user.role == "student":
+		return redirect(url_for("enter_code"))
+	return redirect(url_for("teacherEvaluations"))
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -133,26 +137,32 @@ def teacherEvaluations():
 
 
 @app.route("/createTest")
+@login_required
 def createTest():
     return render_template('create_test.html')
 
 
-@app.route("/modifyTest")
+@app.route("/modifyTest/<id>", methods = ['POST'])
+@login_required
 def modifyTest():
-    return render_template('modify_test.html')
+	test = get_test_by_id(id)
+	return render_template('modify_test.html', test=test)
 
 
 @app.route("/correctEvaluation")
+@login_required
 def correctEvaluation():
     questions = ["Question 1", "Question 2", "Question3"]
     return render_template('correct_evaluation.html', questions = questions)
 
 
 @app.route("/correctQuestion")
+@login_required
 def correctQuestion():
     return render_template("correct_question.html")
 
 @app.route("/upload", methods = ['POST'])
+@login_required
 def upload():
     if 'audio' not in request.files:
         return 'Aucun fichier audio trouvé', 400
@@ -174,10 +184,41 @@ def upload():
     
 
 @app.route('/uploads/<filename>')
+@login_required
 def download_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachment=True)
 
 
 @app.route("/record")
+@login_required
 def record():
     return render_template('record.html')
+
+
+@app.route("/enter_code")
+@login_required
+def enter_code():
+	return render_template('enter_code.html')
+
+
+@app.route("/test/<code>")
+@login_required
+def join(code):
+	if does_code_exist(code):
+		# Todo: redirect to the test page
+		return render_template('test.html', test=get_test_by_code(code))
+	else:
+		# flash('The code is not correct. Please try again.', 'error')
+		return redirect('/enter_code')
+
+
+@app.route("/api/addtest", methods=["POST"])
+@login_required
+def add_test():
+	data = request.json
+	title = data['title']
+	questions = data['questions']
+	lesson_id = 1 # We don't have the lesson list implemented for the demo
+	questions_list = [Question(question["question"], "", [question["hint"]]) for question in questions]
+	create_test(lesson_id, title, questions_list)
+	return "Test added", 200

@@ -94,7 +94,7 @@ def get_user_tags_by_id(user_id: int) -> list[str]:
 	return user.tag
 
 
-def user_can_connect(user_email: str, password: str) -> (bool, User):
+def user_can_connect(user_email: str, password: str) -> (bool, User): # type: ignore
 	"""
 	Checks if a user is in the database and if the password is correct.
 

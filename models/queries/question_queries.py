@@ -6,7 +6,7 @@ from ..question import Question
 from __init__ import db
 
 
-def create_question(question: str, vocal: bytes, test_id: str, hints: [str]):
+def create_question(question: str, vocal: bytes, test_id: int, hints: [str]): # type: ignore
     """
     Creates a new lesson in the database.
 
@@ -16,9 +16,10 @@ def create_question(question: str, vocal: bytes, test_id: str, hints: [str]):
     :param hints: The hints of the question.
     """
     question = Question(question=question, vocal=vocal, test=test_id)
-    hints = [Hint(hint=hint, question=question.id) for hint in hints]
     try:
         db.session.add(question)
+        db.session.commit()
+        hints = [Hint(hint=hint, question=question.id) for hint in hints]
         for hint_entity in hints:
             db.session.add(hint_entity)
         db.session.commit()

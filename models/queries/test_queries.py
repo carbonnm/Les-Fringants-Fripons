@@ -8,7 +8,7 @@ from .question_queries import create_question
 from __init__ import db
 
 
-def create_test(lesson_id: int, name: str, questions_list: [Question]):
+def create_test(lesson_id: int, name: str, questions_list: [Question]): # type: ignore
     """
     Creates a new lesson in the database.
 
@@ -21,12 +21,11 @@ def create_test(lesson_id: int, name: str, questions_list: [Question]):
     if get_test_by_name_and_lesson(name, get_lesson_by_id(lesson_id).name) is not None:
         raise ValueError("A test with the same name already exists.")
     test = Test(name=name, lesson=lesson_id, code=random_code(), state=False)
-    print(test.name, test.code, test.state, test.lesson, test.id)
     try:
         db.session.add(test)
         db.session.commit()
         for question in questions_list:
-            create_question(question=question.text, vocal=question.vocal, test_id=question.test_id, hints=question.hints)
+            create_question(question=question.text, vocal=question.vocal, test_id=test.id, hints=question.hints)
     except SQLAlchemyError:
         db.session.rollback()
         raise
@@ -106,4 +105,25 @@ def random_code():
     """
     import random
     import string
-    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+    code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+    return code if not does_code_exist(code) else random_code()
+
+
+def does_code_exist(code: str) -> bool:
+    """
+    Checks if a code exists in the database.
+
+    :param code: The code to check.
+    :return: True if the code exists, False otherwise.
+    """
+    return get_test_by_code(code) is not None
+
+
+def get_test_by_code(code: str) -> Test:
+    """
+    Gets a test from the database by its code.
+
+    :param code: The code of the test.
+    :return: The test.
+    """
+    return Test.query.filter_by(code=code).first()

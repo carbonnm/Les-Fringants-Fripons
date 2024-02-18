@@ -1,8 +1,7 @@
 class Question:
-    def __init__(self, text_id: int, text: str, vocal: bytes, hints: [str]):
-        self.test_id: int = text_id
+    def __init__(self, text: str, vocal: str, hints: [str]):
         self.text: str = text
-        self.vocal: bytes = vocal
+        self.vocal: str = vocal
         self.hints: [str] = hints
 
     def add_hint(self, text: str):

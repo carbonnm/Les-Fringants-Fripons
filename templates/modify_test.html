@@ -2,4 +2,166 @@
 
 {% block content %}
 
+<style>
+    .save-button-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .save-button {
+        width: 80%; /* Adjust the width as needed */
+        max-width: 400px; /* Optional: Set a maximum width */
+        background-color: #e8e8e8;
+        -webkit-text-fill-color: black;
+        margin-top: 10px; /* Add margin between buttons */
+    }
+
+    .bouton-rose {
+        background-color: #e91e63; /* Couleur de fond rose */
+        color: white; /* Couleur du texte blanche */
+        border: none; /* Supprimer les bordures */
+        width: 100px;
+        height: 100px;
+        font-size: 16px; /* Taille de la police */
+    }
+
+    .icone-blanc {
+        color: white; /* Couleur de l'icône blanche */
+        margin-right: 5px; /* Espacement à droite de l'icône */
+    }
+
+    .custom-dialog {
+            width: 60%; /* Ajustez la largeur comme vous le souhaitez */
+        }
+
+    .mdl-dialog__title {
+        float: left;
+    }
+
+    .mdl-dialog__content {
+        float: center;
+    }
+
+    .icon-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .inputPane {
+    width: 100%; /* Prend tout l'espace disponible horizontalement */
+    height: 60vh; /* Ajuste la hauteur à 80% de la hauteur de la fenêtre */
+    resize: none; /* Empêche le redimensionnement du textarea par l'utilisateur */
+}
+</style>
+
+<script src="{{ url_for('static', filename='js/modify_test.js') }}">
+    loadQuestions();
+    displayQuestions();
+</script>
+
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--4-col"></div>
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-desktop">
+                <h2>Création d'une évaluation</h2>
+                <!-- Simple Textfield -->
+                <form action="#">
+                    <div class="mdl-textfield mdl-js-textfield custom-textfield">
+                        <input class="mdl-textfield__input" type="text" id="test-title" value="{{ test.name }}">
+                        <label class="mdl-textfield__label" for="test-title" style="font-size: 20px;">Titre de l'évaluation</label>
+                    </div>
+                </form>
+
+                <!-- Ajouter une nouvelle question -->
+                <button type="button" class="mdl-button show-modal">
+                    <span>Ajouter une nouvelle question</span>
+                </button>
+
+
+                <dialog class="mdl-dialog custom-dialog">
+                    <div class="mdl-dialog__title">
+                        <h4 class="mdl-dialog__title">Énoncé de l'exercice</h4>
+                        <div class="mdl-dialog__content">
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class="mdl-textfield__input" type="text" id="question">
+                                <label class="mdl-textfield__label" for="question">Énoncé de l'exercice</label>
+                            </div>
+                        </div>
+
+                        <h4 class="mdl-dialog__title">Réponse finale de l'exercice</h4>
+                        <div class="mdl-dialog__content">
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class="mdl-textfield__input" type="text" id="answer">
+                                <label class="mdl-textfield__label" for="answer">Réponse finale de l'exercice</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="icon-container">
+                        <!-- FAB button with ripple -->
+                        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
+                            <i class="material-icons">microphone</i>
+                        </button>
+                        <button id="startRecording" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
+                            <i class="material-icons">play</i>
+                        </button>
+                        <button id="startRecording" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
+                            <i class="material-icons">stop</i>
+                        </button>
+                        <audio id="audioPlayer" controls></audio>
+                        <button id="downloadAudio" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
+                            <i class="material-icons">add</i>
+                        </button>
+                    </div>
+
+                    <div class="custom-dialog">
+                        <h4 class="mdl-dialog__title">Indices</h4>
+                    </div>
+
+                    <div class="mdl-dialog__content">
+                        <!-- Zone de saisie pour les hints -->
+                        <textarea id="hint" class="inputPane"></textarea>
+                    </div>
+                        <!-- Actions de la boîte de dialogue -->
+                        <div class="mdl-dialog__actions">
+                            <!-- Bouton pour ajouter l'exercice -->
+                            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored show-modal" onclick=createQuestion() id="submit-button">Ajouter l'exercice</button>
+                            <!-- Bouton pour annuler -->
+                            <button type="button" class="mdl-button mdl-js-button mdl-button--raised close" onclick=resetDialog()>Annuler</button>
+                        </div>
+                    </div>
+                </dialog>
+
+                <script>
+                    var dialog = document.querySelector('dialog');
+                    var showModalButton = document.querySelector('.show-modal');
+                    if (!dialog.showModal) {
+                        dialogPolyfill.registerDialog(dialog);
+                    }
+                    showModalButton.addEventListener('click', function () {
+                        dialog.showModal();
+                    });
+                    dialog.querySelector('.close').addEventListener('click', function () {
+                        dialog.close();
+                    });
+                </script>
+
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--4-col"></div>
+                        <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-desktop">
+                            <div class="demo-list-action mdl-list" id="questions-list">
+                            </div>
+                            <!-- Editer l'évaluation -->
+                            <button class="save-button mdl-button mdl-js-button mdl-button mdl-js-ripple-effect mdl-button--accent" onclick=editTest({{ test.id }})>
+                                Editer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+
 {% endblock %}
