@@ -29,6 +29,25 @@
         color: white; /* Couleur de l'icône blanche */
         margin-right: 5px; /* Espacement à droite de l'icône */
     }
+
+    .save-button {
+        width: 80%; /* Adjust the width as needed */
+        max-width: 400px; /* Optional: Set a maximum width */
+        background-color: #e8e8e8;
+        -webkit-text-fill-color: black;
+        margin-top: 10px; /* Add margin between buttons */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .icon-container {
+        display: block;
+    margin: 0 auto; /* Cette propriété déplace l'élément au centre horizontalement */
+    text-align: center; /* Cette propriété assure que le texte à l'intérieur du bouton est également centré */
+    background-color: #e8e8e8;
+        -webkit-text-fill-color: black;
+}
     
 </style>
 
@@ -71,6 +90,13 @@
         <textarea id="markdown" class="mdl-textfield__input mdl-shadow--2dp encadre" rows="4"></textarea>
         </div>
         {% endfor %}
+
+        <br>
+
+        <!-- Créer l'évaluation -->
+        <button class="icon-container  mdl-button mdl-js-button mdl-button mdl-js-ripple-effect mdl-button--accent">
+            Valider mes réponses
+        </button>
 
     </div>
 </div>
