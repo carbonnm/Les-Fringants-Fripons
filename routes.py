@@ -222,3 +222,9 @@ def add_test():
 	questions_list = [Question(question["question"], "", [question["hint"]]) for question in questions]
 	create_test(lesson_id, title, questions_list)
 	return "Test added", 200
+
+
+@app.route("/passEvaluation")
+def pass_evaluation():
+	questions = ["Question1", "Question2", "Question3"]
+	return render_template('pass_evaluation.html', questions = questions)
