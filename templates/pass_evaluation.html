@@ -52,21 +52,6 @@
 </style>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
-    function initMarkdown() {
-        var questions = document.querySelectorAll("#question-meta");
-        for (var questionMeta of questions) {
-            var text = questionMeta.getAttribute("question");
-            for(question of document.querySelectorAll("#question-text"))
-            {
-                if (question.getAttribute("question_id") == questionId)
-                {
-                    question.innerHTML = marked.parse(text);
-                    break;
-                }
-            }
-        }
-    }
-
     function hintMarkdown(questionId) {
         var hints = document.querySelectorAll("#hint-meta");
         for(var hint of hints)
@@ -125,7 +110,6 @@
             }
         }
     }
-    initMarkdown();
 </script>
 
 <div class="mdl-cell mdl-cell--4-col"></div>
@@ -184,5 +168,26 @@
 
     </div>
 </div>
+
+<script>
+    function initMarkdown() {
+        var questions = document.querySelectorAll("#question-meta");
+        console.log(questions);
+        for (var questionMeta of questions) {
+            var text = questionMeta.getAttribute("question");
+            var questionId = questionMeta.getAttribute("question_id");
+            for(question of document.querySelectorAll("#question-text"))
+            {
+                if (question.getAttribute("question_id") == questionId)
+                {
+                    question.innerHTML = marked.parse(text);
+                    break;
+                }
+            }
+        }
+    }
+
+    initMarkdown();
+</script>
 
 {% endblock %}
