@@ -12,6 +12,39 @@ function getQuestionValues() {
     };
 }
 
+
+function addQuestion(questionId, question, vocal, hints) {
+    const questionsList = document.getElementById("questions-list");
+    const questionDiv = document.createElement("div");
+    if (hints.length === 0) {
+        hints.push("");
+    }
+    questions.push({
+        question: question,
+        answer: "",
+        vocal: vocal,
+        hint: hints[0],
+    });
+    questionDiv.className = "mdl-list__item";
+    questionDiv.innerHTML = `
+        <span class="mdl-list__item-primary-content">
+            <i class="material-icons mdl-list__item-avatar">question_answer</i>
+            <span>${question}</span>
+        </span>
+        <span class="mdl-list__item-secondary-action">
+            <button class="mdl-button mdl-js-button mdl-button--icon" onclick=openDialog(${questions.length - 1})>
+                <i class="material-icons">edit</i>
+            </button>
+        </span>
+        <span class="mdl-list__item-secondary-action">
+            <button class="mdl-button mdl-js-button mdl-button--icon" onclick=deleteQuestion(${questions.length - 1})>
+                <i class="material-icons">delete</i>
+            </button>
+        </span>
+    `;
+    questionsList.appendChild(questionDiv);
+}
+
 function createQuestion() {
     const question = getQuestionValues();
     questions.push(question);

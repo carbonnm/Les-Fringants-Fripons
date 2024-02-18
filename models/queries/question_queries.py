@@ -1,5 +1,7 @@
 from sqlalchemy.exc import SQLAlchemyError
 
+from models.answer import Answer
+
 from ..hint import Hint
 from ..question import Question
 
@@ -45,6 +47,36 @@ def get_all_questions() -> list[Question]:
     :return: A list of lessons.
     """
     return Question.query.all()
+
+
+def get_questions_by_test_id(test_id: int) -> list[Question]:
+    """
+    Gets all the questions from the database by the test id.
+
+    :param test_id: The id of the test.
+    :return: A list of questions.
+    """
+    return Question.query.filter_by(test=test_id).all()
+
+
+def get_all_question_hints(question_id: int) -> list[Hint]:
+    """
+    Gets all the hints from the database by the question id.
+
+    :param question_id: The id of the question.
+    :return: A list of hints.
+    """
+    return Hint.query.filter_by(question=question_id).all()
+
+
+def get_all_answers(question_id: int) -> list[Hint]:
+    """
+    Gets all the answers from the database by the question id.
+
+    :param question_id: The id of the question.
+    :return: A list of answers.
+    """
+    return Answer.query.filter_by(question=question_id).all()
 
 
 def delete_question_by_id(question_id: int):

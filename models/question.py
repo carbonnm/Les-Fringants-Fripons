@@ -1,5 +1,6 @@
 from __init__ import db
 from .hint import Hint
+from .answer import Answer
 
 class Question(db.Model):
 	"""

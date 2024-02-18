@@ -57,15 +57,17 @@
 }
 </style>
 
-<script src="{{ url_for('static', filename='js/modify_test.js') }}">
-    loadQuestions();
-    displayQuestions();
-</script>
-
+    <meta test_id="{{ test.id }}" test_name="{{ test.name }}" id="test-meta">
+    {% for question in questions %}
+        <meta question_id="{{ question.id }}" question="{{ question.question }}" vocal="{{ question.vocal }}" id="question-meta">
+        {% for hint in hints_query(question.id) %}
+            <meta question_id="{{ question.id }}" hint="{{ hint.hint }}" id="hint-meta">
+        {% endfor %}
+    {% endfor %}
     <div class="mdl-grid">
         <div class="mdl-cell mdl-cell--4-col"></div>
         <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-desktop">
-                <h2>Création d'une évaluation</h2>
+                <h2>Modification d'une évaluation</h2>
                 <!-- Simple Textfield -->
                 <form action="#">
                     <div class="mdl-textfield mdl-js-textfield custom-textfield">
@@ -160,7 +162,26 @@
                         </div>
                     </div>
                 </div>
-
+            <script src="{{ url_for('static', filename='js/edit_test.js') }}"></script>
+            <script>
+                const testMeta = document.getElementById("test-meta");
+                const testId = testMeta.getAttribute("test_id");
+                const testName = testMeta.getAttribute("test_name");
+                const questionsMeta = document.querySelectorAll("#question-meta");                
+                questionsMeta.forEach(questionMeta => {
+                    const questionId = questionMeta.getAttribute("question_id");
+                    const question = questionMeta.getAttribute("question");
+                    const vocal = questionMeta.getAttribute("vocal");
+                    const hintsMeta = document.querySelectorAll("#hint-meta");
+                    const hints = [];
+                    hintsMeta.forEach(hintMeta => {
+                        if (hintMeta.getAttribute("question_id") == questionId) {
+                            hints.push(hintMeta.getAttribute("hint"));
+                        }
+                    });
+                    addQuestion(questionId, question, vocal, hints);
+                });
+            </script>
         </div>
     </div>
 

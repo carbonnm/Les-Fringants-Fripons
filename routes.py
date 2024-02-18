@@ -11,6 +11,7 @@ from werkzeug.utils import secure_filename
 from models.queries.user_queries import get_user_by_email
 from models.queries.lesson_queries import create_lesson, get_lesson_by_name
 from models.queries.test_queries import get_all_tests, create_test, does_code_exist, get_test_by_code, get_test_by_id
+from models.queries.question_queries import get_all_answers, get_all_question_hints, get_questions_by_test_id
 from models.forms.login_form import LoginForm
 from flask import redirect, render_template, flash
 
@@ -142,11 +143,12 @@ def createTest():
     return render_template('create_test.html')
 
 
-@app.route("/modifyTest/<id>", methods = ['POST'])
-@login_required
-def modifyTest():
+@app.route("/modifyTest/<id>", methods = ['GET'])
+def modifyTest(id):
 	test = get_test_by_id(id)
-	return render_template('modify_test.html', test=test)
+	questions = get_questions_by_test_id(id)
+	hints_query = get_all_question_hints
+	return render_template('modify_test.html', test=test, questions=questions, hints_query=hints_query)
 
 
 @app.route("/correctEvaluation")
@@ -206,7 +208,10 @@ def enter_code():
 def join(code):
 	if does_code_exist(code):
 		# Todo: redirect to the test page
-		return render_template('pass_evaluation.html', test=get_test_by_code(code))
+		test = get_test_by_code(code)
+		questions = get_questions_by_test_id(test.id)
+		hints_query = get_all_question_hints
+		return render_template('pass_evaluation.html', test=test, questions=questions, hints_query=hints_query)
 	else:
 		# flash('The code is not correct. Please try again.', 'error')
 		return redirect('/enter_code')
