@@ -11,7 +11,7 @@ from werkzeug.utils import secure_filename
 from models.queries.user_queries import get_user_by_email
 from models.queries.lesson_queries import create_lesson, get_lesson_by_name
 from models.queries.test_queries import get_all_tests, create_test, does_code_exist, get_test_by_code, get_test_by_id
-from models.queries.question_queries import get_all_answers, get_all_question_hints, get_questions_by_test_id
+from models.queries.question_queries import get_all_answers, get_all_question_hints, get_questions_by_test_id, create_question
 from models.forms.login_form import LoginForm
 from flask import redirect, render_template, flash
 
@@ -28,7 +28,7 @@ if user_queries.get_user_by_email("admin@admin.com") is None:
 	
 	tag_queries.create_tag("Visual", user_queries.get_user_by_email("donato.gentile@student.unamur.be").id)
 	tag_queries.create_tag("Auditory", user_queries.get_user_by_email("mehdi.bouzid@gmail.com").id)
-	tag_queries.create_tag("Matteo Minded", user_queries.get_user_by_email("pierre.lambert@hotmail.com").id)
+	#tag_queries.create_tag("Matteo Minded", user_queries.get_user_by_email("pierre.lambert@hotmail.com").id)
 	tag_queries.create_tag("Need extra help", user_queries.get_user_by_email("pierre.lambert@hotmail.com").id)
 
 	create_lesson(teacher_id=get_user_by_email("wim.vanhoof@unamur.be").id, name="Probabilités et Statistiques")
@@ -37,7 +37,11 @@ if user_queries.get_user_by_email("admin@admin.com") is None:
 
 	create_test(lesson_id=get_lesson_by_name("Probabilités et Statistiques").id, name="Examen Bac 2 janvier 2023", questions_list=[])
 	create_test(lesson_id=get_lesson_by_name("Probabilités et Statistiques").id, name="Examen Bac 2 juin 2024", questions_list=[])
-	create_test(lesson_id=get_lesson_by_name("Introduction à l'informatique").id, name="Examen Bac 1 janvier 2023", questions_list=[])                                                           
+	create_test(lesson_id=get_lesson_by_name("Introduction à l'informatique").id, name="Examen Bac 1 janvier 2023", questions_list=[])
+	create_test(lesson_id=get_lesson_by_name("Introduction à l'informatique").id, name="Examen mystère", 
+			 questions_list=[Question(text="", vocal=None, hints=[]), 
+					Question(text="", vocal=None, hints=[]),
+					Question(text= "", vocal= None, hints= [])])
 
 
 @app.login_manager.user_loader
