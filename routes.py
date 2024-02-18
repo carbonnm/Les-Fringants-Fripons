@@ -184,5 +184,11 @@ def record():
 
 
 @app.route("/passEvaluation")
-def passEvaluation():
-	return render_template('pass_evaluation.html')
+def pass_evaluation():
+	questions = ["Question1", "Question2", "Question3"]
+	return render_template('pass_evaluation.html', questions = questions)
+
+
+@app.route("/enterCode")
+def enter_code():
+	return render_template('enter_code.html')

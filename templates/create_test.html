@@ -62,7 +62,6 @@
         height: 40vh; /* Ajuste la hauteur à 80% de la hauteur de la fenêtre */
         resize: none; /* Empêche le redimensionnement du textarea par l'utilisateur */
     }
-}
 
 </style>
 
@@ -93,7 +92,6 @@
 
                     <div class="icon-container">
                         <!-- FAB button with ripple -->
-                        <script src="https://cdn.webrtc-experiment.com/RecordRTC.js"></script>
                         <button id="startRecording" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
                             <i class="material-icons">microphone</i>
                         </button>
@@ -106,6 +104,7 @@
                             <i class="material-icons">add</i>
                         </button>
 
+                        <script src="https://cdn.webrtc-experiment.com/RecordRTC.js"></script>
                         <script>
                             document.addEventListener('DOMContentLoaded', function () {
                                 const startRecordingButton = document.getElementById('startRecording');
@@ -160,10 +159,11 @@
                                     .then(response => response.text())
                                     .then(message => console.log(message))
                                     .catch(error => console.error(error));
+
+                                    
                                 }               
                             });
                         </script>
-
                     </div>
 
                     <div class="mdl-dialog__content">

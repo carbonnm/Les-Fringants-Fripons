@@ -2,4 +2,77 @@
 
 {% block content %}
 
+<style>
+    /* Styles pour l'encadré */
+    .encadre {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin: 10px;
+        max-width: 80%;
+        margin: 0 auto;
+    }
+
+    .encadre p {
+        margin: 0;
+    }
+
+    .bouton-rose {
+        background-color: #e91e63; /* Couleur de fond rose */
+        color: white; /* Couleur du texte blanche */
+        border: none; /* Supprimer les bordures */
+        width: 100px;
+        height: 100px;
+        font-size: 16px; /* Taille de la police */
+    }
+
+    .icone-blanc {
+        color: white; /* Couleur de l'icône blanche */
+        margin-right: 5px; /* Espacement à droite de l'icône */
+    }
+    
+</style>
+
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--4-col"></div>
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-desktop">
+
+        {% for question in questions %}
+        <h3>{{ question }}</h3>
+        <div style="display: flex;">
+            <div class="encadre" style="flex: 10;">
+                <p>Dans un champ de 100 hectares, combien de vaches y-a-t-il si l'on y place une barrière de 100 000 poteaux tous les mètres ? Combien de fois chuck noris a-t-il fait le tour du soleil à la nage ? Si l'on est sur la terre et qu'on nage duant un an sans discontinuer, peut-on dire que l'on a fait le tour du soleil à la nage ?</p>
+            </div>
+            <div>
+
+                <button id="startRecording" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" onclick="playAudio()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>account-voice</title><path d="M9,5A4,4 0 0,1 13,9A4,4 0 0,1 9,13A4,4 0 0,1 5,9A4,4 0 0,1 9,5M9,15C11.67,15 17,16.34 17,19V21H1V19C1,16.34 6.33,15 9,15M16.76,5.36C18.78,7.56 18.78,10.61 16.76,12.63L15.08,10.94C15.92,9.76 15.92,8.23 15.08,7.05L16.76,5.36M20.07,2C24,6.05 23.97,12.11 20.07,16L18.44,14.37C21.21,11.19 21.21,6.65 18.44,3.63L20.07,2Z" /></svg>
+                </button>
+
+                <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>lightbulb-on</title><path d="M12,6A6,6 0 0,1 18,12C18,14.22 16.79,16.16 15,17.2V19A1,1 0 0,1 14,20H10A1,1 0 0,1 9,19V17.2C7.21,16.16 6,14.22 6,12A6,6 0 0,1 12,6M14,21V22A1,1 0 0,1 13,23H11A1,1 0 0,1 10,22V21H14M20,11H23V13H20V11M1,11H4V13H1V11M13,1V4H11V1H13M4.92,3.5L7.05,5.64L5.63,7.05L3.5,4.93L4.92,3.5M16.95,5.63L19.07,3.5L20.5,4.93L18.37,7.05L16.95,5.63Z" /></svg>
+                </button>
+
+            </div>
+        </div>
+
+        <script>
+            function playAudio() {
+                var audioUrl = "../uploads/enregistrement.mp3";
+                var audio = new Audio(audioUrl);
+                // Lancez la lecture
+                audio.play();
+            }
+        </script>
+
+        <br>
+
+        <div style="display: flex;">
+        <!-- Zone de saisie pour les hints -->
+        <textarea id="markdown" class="mdl-textfield__input mdl-shadow--2dp encadre" rows="4"></textarea>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
 {% endblock %}
