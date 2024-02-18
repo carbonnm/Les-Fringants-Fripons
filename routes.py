@@ -49,7 +49,7 @@ Un bloc de masse m1 = 5 kg est suspendu par une corde qui passe sur une poulie f
 3. Quelle est l'accélération du système entier ?
 4. Si la masse m2 est retirée, comment cela affectera-t-il l'accélération du système ?
 """, vocal=None, hints=[]), 
-					Question(text="", vocal=None, hints=[problem_description = """
+					Question(text="", vocal=None, hints=["""
 ### Problème : Forces et Tensions dans un Système de Poulies
 
 Un bloc de masse **m1 = 5 kg** est suspendu par une corde qui passe sur une poulie fixe, puis descend verticalement pour être attaché à un second bloc de masse **m2 = 3 kg** qui repose sur une surface horizontale sans frottement. Un troisième bloc de masse **m3 = 4 kg** est suspendu par une autre corde attachée au second bloc.
