@@ -40,7 +40,7 @@ if user_queries.get_user_by_email("admin@admin.com") is None:
 	create_test(lesson_id=get_lesson_by_name("Introduction à l'informatique").id, name="Examen Bac 1 janvier 2023", questions_list=[])
 	create_test(lesson_id=get_lesson_by_name("Introduction à l'informatique").id, name="Examen mystère", 
 			 questions_list=[Question(text="""
-### Problème : Forces et Tensions dans un Système de Poulies
+### Problème 1 : Forces et Tensions dans un Système de Poulies
 
 Un bloc de masse m1 = 5 kg est suspendu par une corde qui passe sur une poulie fixe, puis descend verticalement pour être attaché à un second bloc de masse m2 = 3 kg qui repose sur une surface horizontale sans frottement. Un troisième bloc de masse m3 = 4 kg est suspendu par une autre corde attachée au second bloc.
 
@@ -49,7 +49,7 @@ Un bloc de masse m1 = 5 kg est suspendu par une corde qui passe sur une poulie f
 3. Quelle est l'accélération du système entier ?
 4. Si la masse m2 est retirée, comment cela affectera-t-il l'accélération du système ?
 """, vocal="", hints=["""
-### Problème : Forces et Tensions dans un Système de Poulies
+### Problème 1 : Forces et Tensions dans un Système de Poulies
 
 Un bloc de masse **m1 = 5 kg** est suspendu par une corde qui passe sur une poulie fixe, puis descend verticalement pour être attaché à un second bloc de masse **m2 = 3 kg** qui repose sur une surface horizontale sans frottement. Un troisième bloc de masse **m3 = 4 kg** est suspendu par une autre corde attachée au second bloc.
 
@@ -60,8 +60,34 @@ Un bloc de masse **m1 = 5 kg** est suspendu par une corde qui passe sur une poul
 
 **Indice :** Pour résoudre ce problème, utilisez les principes de la **conservation de l'énergie** et les lois de **Newton** pour les mouvements rectilignes et circulaires.
 """]), 
-					Question(text="", vocal="", hints=[]),
-					Question(text= "", vocal="", hints= [])])
+					Question(text="""
+### Problème 2 : Mouvement à une Dimension
+
+Un objet est lancé verticalement vers le haut avec une vitesse initiale de 20 m/s depuis une hauteur de 10 m au-dessus du sol. Utilisant les lois de la cinématique, calculez :
+
+1. Le temps nécessaire pour que l'objet atteigne sa hauteur maximale.
+2. La hauteur maximale atteinte par l'objet.
+3. La vitesse de l'objet juste avant de toucher le sol.""", vocal="", hints=["""
+### Problème 2 : Mouvement à une Dimension
+
+Un objet est lancé verticalement vers le haut avec une vitesse initiale de **20 m/s** depuis une hauteur de **10 m** au-dessus du sol. Utilisant les lois de la cinématique, calculez :
+
+1. Le temps nécessaire pour que l'objet atteigne sa hauteur maximale.
+2. La hauteur maximale atteinte par l'objet.
+3. La vitesse de l'objet juste avant de toucher le sol.
+
+**Indice :** Utilisez les équations du mouvement uniformément accéléré (MUA).
+"""]),
+					Question(text= """
+### Problème 3 : Loi de Coulomb
+
+Deux charges électriques de +5 C et -3 C sont placées à une distance de 2 m l'une de l'autre dans le vide. Calculez la force électrique entre ces deux charges.""", vocal="", hints= ["""
+### Problème 3 : Loi de Coulomb
+
+Deux charges électriques de **+5 C** et **-3 C** sont placées à une distance de **2 m** l'une de l'autre dans le vide. Calculez la force électrique entre ces deux charges.
+
+**Indice :** Utilisez la loi de Coulomb, F = k * (q1 * q2) / r^2, où F est la force électrique, q1 et q2 sont les valeurs des charges, r est la distance entre les charges, et k est la constante électrique.
+"""])])
 
 
 @app.login_manager.user_loader
